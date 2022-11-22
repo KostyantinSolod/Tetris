@@ -7,14 +7,14 @@ public class Board : MonoBehaviour
 {
     public Tilemap tilemap { get; private set; }
     public Piece activePiece { get; private set; }
-    public Vector3Int spawnPosition;
+    public Vector3Int spawnPosition = new Vector3Int(-1, 8, 0);
     public TetrominoData[] tetrominoes;
     public Vector2Int boardSize = new Vector2Int(10, 20);
     public RectInt Bounds
     {
         get
         {
-            Vector2Int position = new Vector2Int(-this.boardSize.x/2, this.boardSize.y/2);
+            Vector2Int position = new Vector2Int(-this.boardSize.x/2, -this.boardSize.y/2);
             return new RectInt(position, this.boardSize);
         }
     }
@@ -35,7 +35,7 @@ public class Board : MonoBehaviour
     {
         int random = Random.Range(0, tetrominoes.Length);
         TetrominoData data = this.tetrominoes[random];
-        this.activePiece.Initialize(this, this.spawnPosition, data);
+        this.activePiece.Initialize(this, spawnPosition, data);
         if (IsValidPosition(this.activePiece, this.spawnPosition))
         {
             Set(this.activePiece);
@@ -63,7 +63,7 @@ public class Board : MonoBehaviour
     }
     public bool IsValidPosition(Piece piece, Vector3Int position)
     {
-        RectInt bounds = this.Bounds;
+        RectInt bounds = Bounds;
         for (int i = 0; i < piece.cells.Length; i++)
         {
             Vector3Int tilePosition = piece.cells[i] + position;
@@ -121,7 +121,7 @@ public class Board : MonoBehaviour
             for (int i = bounds.xMin; i < bounds.xMax; i++)
             {
                 Vector3Int position = new Vector3Int(i, row+1, 0);
-                TileBase above = this.tilemap.GetTile(position);
+                TileBase above = tilemap.GetTile(position);
                 position = new Vector3Int(i, row, 0);
                 this.tilemap.SetTile(position, above);
             }

@@ -14,7 +14,7 @@ public class Ghost : MonoBehaviour
     private void Awake()
     {
         this.tilemap = GetComponentInChildren<Tilemap>();
-        this.cells = new Vector3Int[4];
+        this.cells = new Vector3Int[4]; 
     }
     private void Clear()
     {
@@ -35,8 +35,8 @@ public class Ghost : MonoBehaviour
     {
         Vector3Int position = this.trackingPiece.position;
         int current = position.y;
-        int bottom = -this.board.boardSize.y / 2 - 1;
-        this.board.Clear(this.trackingPiece);
+        int bottom = -board.boardSize.y / 2 - 1;
+        this.board.Clear(trackingPiece);
         for (int i = current; i >= bottom; i--)
         {
             position.y = i;
@@ -49,7 +49,7 @@ public class Ghost : MonoBehaviour
                 break;
             }
         }
-        this.board.Set(this.trackingPiece);
+        board.Set(this.trackingPiece);
     }
     private void Set()
     {
